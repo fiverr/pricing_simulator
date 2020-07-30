@@ -75,7 +75,7 @@
 			$(document).ready(function(){
 				fillTemplate(businessFeatures);
 				updateFields();
-				createPkgExamples();
+				createPkgExamples(businessFeatures);
 				$("select.extra-price").change(function(){
 					updateFields();
 				});
@@ -85,13 +85,12 @@
 			});
 
 			function fillTemplate(type){
-				
 				var myTmpl = $.templates("#featuresTmpl");
 				var html = myTmpl.render(type);
 					$("#features").html(html);
 			}
 
-			function createPkgExamples (){
+			function createPkgExamples (type){
 				for (i=0;i<basicScopeId.length;i++){
 					basicScope.push(type[basicScopeId[i]].value);
 					basicScopeText+=", " + type[basicScopeId[i]].name;
