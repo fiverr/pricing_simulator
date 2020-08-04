@@ -22,17 +22,22 @@
 		<script type="text/javascript">
 			const basicDelivery = 5;
 			const extrafastDelivery = 2;
-			const basicScopeId=[0,2,6,11,13];
-			const mediumScopeId=[0,1,2,3,4,5,6,11,13,16];
-			const largeScopeId=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,15];
-			var basicScope=[];
-			var mediumScope=[];
-			var largeScope=[];
-			var basicScopeText = "Homepage, Contact Form";
-			var mediumScopeText="Homepage, Contact Form";
-			var largeScopeText="Homepage, Contact Form";
+			const businessScopeId = [
+				[0,2,6,11,13],
+				[0,1,2,3,4,5,6,11,13,16],
+				[0,1,2,3,4,5,6,7,8,9,10,11,12,13,15]
+				];
+			const storeScopeId = [
+				[0,1,2,4,12],
+				[0,1,2,4,6,7,11,12,14],
+				[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+			];
+			var scope =new Array(2);
+			var k=0;
+			var businessBasicScopeText = "Homepage, Contact Form";
+			var storeBasicScopeText = "Homepage, Payments, 20 Product Listings";
 			const businessFeatures =[
-				{id: 0,name:"About us",value:"about-us"},
+				{id: 0,name:"About Us",value:"about-us"},
 				{id: 1,name:"Projects",value:"projects"},
 				{id: 2,name:"Services",value:"services"},
 				{id: 3,name:"FAQs",value:"faqs"},
@@ -52,60 +57,95 @@
 				{id: 17,name:"Restaurant Menu",value:"restaurant-menu"}
 			];
 
-			const storeFeature= [
-				{id:0,name:"About Us",value:"about-us"},
-				{id:1,name:"Contact Form",value:"Contact-form"},
-				{id:2,name:"FAQs",value:"faqs"},
-				{id:3,name:"Testimonials",value:"testimonials"},
-				{id:4,name:"TOS / Policy",value:"tos-policy"},
-				{id:5,name:"Media Gallery",value:"media-gallery"},
-				{id:6,name:"Subscribe Form",value:"subscribe-form"},
-				{id:7,name:"Chat",value:"chat"},
-				{id:8,name:"Membership",value:"membership"},
-				{id:9,name:"Map",value:"map"},
-				{id:10,name:"Social Media Integrations",value:"social-media-integrations"},
-				{id:11,name:"Analytics",value:"analytics"},
-				{id:12,name:"Shipping",value:"shipping"},
-				{id:13,name:"Product Reviews",value:"product-reviews"},
-				{id:14,name:"Product Collection Page",value:"product-collection-page"},
-				{id:15,name:"Additional 50 Product Listings",value:"additional-50-product-listings"}
-
+			const storeFeatures= [
+				{id: 0,name:"About Us",value:"about-us"},
+				{id: 1,name:"Contact Form",value:"contact-form"},
+				{id: 2,name:"FAQs",value:"faqs"},
+				{id: 3,name:"Testimonials",value:"testimonials"},
+				{id: 4,name:"TOS / Policy",value:"tos-policy"},
+				{id: 5,name:"Media Gallery",value:"media-gallery"},
+				{id: 6,name:"Subscribe Form",value:"subscribe-form"},
+				{id: 7,name:"Chat",value:"chat"},
+				{id: 8,name:"Membership",value:"membership"},
+				{id: 9,name:"Map",value:"map"},
+				{id: 10,name:"Social Media Integrations",value:"social-media-integrations"},
+				{id: 11,name:"Analytics",value:"analytics"},
+				{id: 12,name:"Shipping",value:"shipping"},
+				{id: 13,name:"Product Reviews",value:"product-reviews"},
+				{id: 14,name:"Product Collection Page",value:"product-collection-page"},
+				{id: 15,name:"Additional 50 Product Listings",value:"additional-50-product-listings"}
 			];
+			const websiteIncludes=[{name:"Homepage"},{name:"Contact Form"}];
+			const storeIncludes=[{name:"Homepage"},{name:"Payments"},{name:"20 Product Listings"}];
+			const websiteDesc = "WordPress website including hosting & domain setup, WordPress installation, homepage, & contact form";
+			const storeDesc="Online store including Shopify account setup, homepage, 20 products catalog, & payment processing";
 			
 			$(document).ready(function(){
+				fillBasicPks(websiteIncludes);
 				fillTemplate(businessFeatures);
-				updateFields();
-				createPkgExamples(businessFeatures);
+				createPkgExamples(businessScopeId, businessFeatures,businessBasicScopeText,k);
+				updateFields(k);
 				$("select.extra-price").change(function(){
-					updateFields();
+					updateFields(k);
 				});
 				$("select.extra-delivery").change(function(){
-					updateFields();
+					updateFields(k);
+				});
+				$("select#website-type").change(function(){
+					console.log($("#website-type").val());
+					var websiteType = $("#website-type").val();
+					$("#basic-price").val(10);
+					$("#extrafast-price").val(0);
+					basicScope=[];
+					if ($("#website-type").val()=="businessFeatures") {
+						fillBasicPks(websiteIncludes);
+						$("#pkgDesc").text(websiteDesc);
+						fillTemplate(businessFeatures);
+						createPkgExamples(businessScopeId, businessFeatures,businessBasicScopeText,k);
+						k=0;
+					} else if ($("#website-type").val()=="storeFeatures") {
+						k=1;
+						$("#pkgDesc").text(storeDesc);
+						fillBasicPks(storeIncludes);
+						fillTemplate(storeFeatures);
+						createPkgExamples(storeScopeId,storeFeatures,storeBasicScopeText,k);
+					}
+					$("select.extra-price").change(function(){
+					updateFields(k);
+				});
+				$("select.extra-delivery").change(function(){
+					updateFields(k);
+				});
+					updateFields(k);
+					
 				});
 			});
 
 			function fillTemplate(type){
 				var myTmpl = $.templates("#featuresTmpl");
 				var html = myTmpl.render(type);
-					$("#features").html(html);
+				$("#features").html(html);
 			}
 
-			function createPkgExamples (type){
-				for (i=0;i<basicScopeId.length;i++){
-					basicScope.push(type[basicScopeId[i]].value);
-					basicScopeText+=", " + type[basicScopeId[i]].name;
+			function fillBasicPks(includes) {
+				var myTmpl = $.templates("#basicPkgTmpl");
+				var html = myTmpl.render(includes);
+				$("#includes").html(html);
+			}
+
+			function createPkgExamples(ids, type, basicText,k){
+				scope[k] = new Array(3);
+				for (j=0;j<3;j++){
+					scope[k][j]="";
+					var scopeText=basicText;
+					for (i=0;i<ids[j].length;i++){
+						scope[k][j] += (type[ids[j][i]].value) +"|";
+						scopeText+=", " + type[ids[j][i]].name;
+					}
+					scope[k][j] = scope[k][j].slice(0,-1);
+					var x = "#scope"+j;
+					$(x).html(scopeText);
 				}
-				for (i=0;i<mediumScopeId.length;i++){
-					mediumScope.push(type[mediumScopeId[i]].value);
-					mediumScopeText+= ", " + type[mediumScopeId[i]].name;
-				}
-				for (i=0;i<largeScopeId.length;i++){
-					largeScope.push(type[largeScopeId[i]].value);
-					largeScopeText+=", " + type[largeScopeId[i]].name;
-				}
-				$("#basicScope").html(basicScopeText);
-				$("#mediumScope").html(mediumScopeText);
-				$("#largeScope").html(largeScopeText);
 			}
 
 			function calculatePrice ( basicPrice,  attributes) {
@@ -124,22 +164,22 @@
 				return deliveryTime;
 			}
 
-			function updateFields() {
+			function updateFields(k) {
 				var basicPrice = parseInt($("#basic-price").val());
 				var extrafastPrice = parseInt($("#extrafast-price").val());
-				$("#price-pkg-1").text(calculatePrice(basicPrice,basicScope));
-				$("#delivery-pkg-1").text(calculateDelivery(basicDelivery,basicScope));
-				$("#price-pkg-2").text(calculatePrice(basicPrice,mediumScope));
-				$("#delivery-pkg-2").text(calculateDelivery(basicDelivery,mediumScope));
-				$("#price-pkg-3").text(calculatePrice(basicPrice,largeScope));
-				$("#delivery-pkg-3").text(calculateDelivery(basicDelivery,largeScope));
-				
-				$("#extrafast-price-pkg-1").text(calculatePrice(basicPrice+extrafastPrice,basicScope));
-				$("#extrafast-delivery-pkg-1").text(calculateDelivery(extrafastDelivery,basicScope));
-				$("#extrafast-price-pkg-2").text(calculatePrice(basicPrice+extrafastPrice,mediumScope));
-				$("#extrafast-delivery-pkg-2").text(calculateDelivery(extrafastDelivery,mediumScope));
-				$("#extrafast-price-pkg-3").text(calculatePrice(basicPrice+extrafastPrice,largeScope));
-				$("#extrafast-delivery-pkg-3").text(calculateDelivery(extrafastDelivery,largeScope));
+				var delivery=basicDelivery;
+				for (t=1 ; t<3;  t++){
+					for (j=0; j<3; j++){
+						var x = "#price-" + t + "-" + (j+1);
+						var y = "#delivery-" + t + "-" + (j+1);
+						var z = scope[k][j].split("|");
+						$(x).text(calculatePrice(basicPrice,z));
+						$(y).text(calculateDelivery(delivery,z));
+					}
+
+					basicPrice+=extrafastPrice;
+					delivery=extrafastDelivery;
+				}
 			}
 		</script>
 		<style type="">
@@ -182,7 +222,11 @@
 			.all{
 				margin-left: 100px;
 			}
-			
+			.pleaseSelect{
+				font-style: italic;
+				font-weight: 700;
+				margin-left: 30px;
+			}
 			.gig-and-packages table tbody td{
 				width: 225px;
 				background: #FFFFFF;
@@ -273,36 +317,26 @@
 										<table>
 											<tbody>
 												<tr class="input-packages">
-													<td class="left-td">Name</td>
-													<td class="right-td">Bussiness website</td>
+													<td class="left-td">Name <span class="pleaseSelect">please select</span></td>
+													<td class="right-td">
+														<select class="dropdown extra-price" name="website-type" id="website-type" style="border: none;padding:0 30px 0 0;margin-left:0">
+															<option value="businessFeatures">Business website</option>
+															<option value="storeFeatures">Online store</option>
+														</select>
+													</td>
 												</tr>
 												<tr class="input-packages">
 													<td class="left-td">Description</td>
-													<td class="right-td">Business website including setup of domain & hosting, WordPress installation, homepage & contact form creation</td>
+													<td id="pkgDesc" class="right-td">WordPress website including hosting & domain setup, WordPress installation, homepage, & contact form</td>
 												</tr>
 												<tr class="input-packages">
 													<td class="left-td">Delivery</td>
 													<td class="right-td">5 Days Delivery</td>
 												</tr>
+											</tbody>
+											<tbody id="includes"></tbody>
+											<tbody>
 												<tr>
-													<td class="left-td">Homepage</td>
-													<td class="right-td">
-														<label class="fake-check-black label-selector">
-															<input type="checkbox" disabled checked>
-															<span class="chk-img"></span>
-														</label>
-													</td>
-												</tr>
-												<tr>
-													<td class="left-td">Contact Form</td>
-													<td class="right-td">
-														<label class="fake-check-black label-selector">
-															<input type="checkbox" disabled checked>
-															<span class="chk-img"></span>
-														</label>
-													</td>
-												</tr>
-												<tr class="input-packages">
 													<td class="left-td">Revisions</td>
 													<td class="right-td">1</td>
 												</tr>
@@ -425,19 +459,19 @@
 												<td>Large scope</td>
 											</tr>
 											<tr>
-												<td id="basicScope"></td>
-												<td id="mediumScope"></td>
-												<td id="largeScope"></td>
+												<td id="scope0"></td>
+												<td id="scope1"></td>
+												<td id="scope2"></td>
 											</tr>
 											<tr class="finalPrice">
-												<td><span id="delivery-pkg-1"></span><label> Days - </label><label>$ </label><span id="price-pkg-1">?</span></td>
-												<td><span id="delivery-pkg-2"></span><label> Days - </label><label>$ </label><span id="price-pkg-2">?</span></td>
-												<td><span id="delivery-pkg-3"></span><label> Days - </label><label>$ </label><span id="price-pkg-3">?</span></td>
+												<td><span id="delivery-1-1"></span><label> Days - </label><label>$ </label><span id="price-1-1">?</span></td>
+												<td><span id="delivery-1-2"></span><label> Days - </label><label>$ </label><span id="price-1-2">?</span></td>
+												<td><span id="delivery-1-3"></span><label> Days - </label><label>$ </label><span id="price-1-3">?</span></td>
 											</tr>
 											<tr class="finalPrice">
-												<td><span id="extrafast-delivery-pkg-1"></span><label> Days - </label><label>$ </label><span id="extrafast-price-pkg-1">?</span></td>
-												<td><span id="extrafast-delivery-pkg-2"></span><label> Days - </label><label>$ </label><span id="extrafast-price-pkg-2">?</span></td>
-												<td><span id="extrafast-delivery-pkg-3"></span><label> Days - </label><label>$ </label><span id="extrafast-price-pkg-3">?</span></td>
+												<td><span id="delivery-2-1"></span><label> Days - </label><label>$ </label><span id="price-2-1">?</span></td>
+												<td><span id="delivery-2-2"></span><label> Days - </label><label>$ </label><span id="price-2-2">?</span></td>
+												<td><span id="delivery-2-3"></span><label> Days - </label><label>$ </label><span id="price-2-3">?</span></td>
 											</tr>
 											
 										</table>
@@ -460,7 +494,7 @@
 												</td>
 												<td>
 													<label>for an extra</label>
-													<select class="extra-price dropdown dropdown-toggle " name="extrafast-price" id="extrafast-price">
+													<select class="extra-price dropdown" name="extrafast-price" id="extrafast-price">
 														<option value="0">$</option>
 														<option value="5">$5</option>
 														<option value="10">$10</option>
@@ -523,7 +557,7 @@
 										<tr class="input-packages extras">
 											<td class="extraname">{{:name}}</td>
 											<td><label>for an extra</label>
-												<select class="extra-price dropdown dropdown-toggle " name="{{:value}}-price" id="{{:value}}-price">
+												<select class="extra-price dropdown" name="{{:value}}-price" id="{{:value}}-price">
 													<option value="0">$</option>
 													<option value="5">$5</option>
 													<option value="10">$10</option>
@@ -547,9 +581,20 @@
 													<option value="3">3 Days</option>
 													<option value="4">4 Days</option>
 													<option value="5">5 Days</option>
-													<option value="5">6 Days</option>
-													<option value="5">7 Days</option>
+													<option value="6">6 Days</option>
+													<option value="7">7 Days</option>
 												</select>
+											</td>
+										</tr>
+									</script>
+									<script id="basicPkgTmpl" type="text/x-jsrender">
+										<tr>
+											<td class="left-td">{{:name}}</td>
+											<td class="right-td">
+												<label class="fake-check-black label-selector">
+													<input type="checkbox" disabled checked>
+														<span class="chk-img"></span>
+												</label>
 											</td>
 										</tr>
 									</script>
