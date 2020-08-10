@@ -3,22 +3,14 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.7/jsrender.min.js" type="text/javascript"></script>
 		<meta name="viewport" content="width=1024">
-		<link rel="preload" href="https://assetsv2.fiverrcdn.com/assets/fonts/proxima_nova/proxima-nova-light-2040c50882cb27743f6c293468392e16.woff2" as="font" crossorigin>
-		<link rel="preload" href="https://assetsv2.fiverrcdn.com/assets/fonts/proxima_nova/proxima-nova-regular-b09cea43222751c4928756103496f0d3.woff2" as="font" crossorigin>
-		<link rel="preload" href="https://assetsv2.fiverrcdn.com/assets/fonts/proxima_nova/proxima-nova-semibold-4bc9726b824a941488c8a360bae66ed3.woff2" as="font" crossorigin>
-		<link rel="preload" href="https://assetsv2.fiverrcdn.com/assets/fonts/proxima_nova/proxima-nova-bold-13843069d4fbe2b5ee978919b786db7e.woff2" as="font" crossorigin>
-		<link href="https://assetsv2.fiverrcdn.com/assets/application-shared-0bb3e02b2c668c863fe2f26eebf7305e.css" media="all" rel="stylesheet" />
-		<link href="https://assetsv2.fiverrcdn.com/assets/application-shared-v2-03e2e4b366ed7864c836440c6934937f.css" media="all" rel="stylesheet" />
-		<link href="https://assetsv2.fiverrcdn.com/assets/application-desktop-0ae8ccdf8c1a562682a121a4ed69f4a4.css" media="all" rel="stylesheet" />
-		<link href="https://assetsv2.fiverrcdn.com/assets/application-desktop-deferred-06dca75a386c2d081d6a0ec041d6ba71.css" media="all" rel="stylesheet" />
-		<link href="https://assetsv2.fiverrcdn.com/assets/application-desktop-v2-d7ded5576b5fecf75b63c08a67416313.css" media="all" rel="stylesheet" />
-		<link href="https://assetsv2.fiverrcdn.com/assets/fit/dist/index-e467b3c5e91086fe58a3154a4d929f68.css" media="all" rel="stylesheet" />
-		<link href="https://assetsv2.fiverrcdn.com/assets/gig-upcrate-dbba891483a597ebb762bda910bb1c83.css" media="all" rel="stylesheet" />
-		<link href="https://assetsv2.fiverrcdn.com/assets/dist/entries/sellerTestsGigCreate-e4f4acd944c565da91ceeac36a141b27.css" media="all" rel="stylesheet" />
-		<link href="https://assetsv2.fiverrcdn.com/assets/react_css/react-description_faq-d73823e07e2c741802f834091e21cc39.css" media="all" rel="stylesheet" />
-		<link href='https://npm-assets.fiverrcdn.com/assets/@fiverr-private/header/Seller.d983dd4dc7bd644e4701.css' rel='stylesheet' type='text/css'>
-		<link href='https://npm-assets.fiverrcdn.com/assets/@fiverr-private/gig_upcrate_pricing/index.8856f7fd8802b66e081f.css' rel='stylesheet' type='text/css'>
-		<link href='https://npm-assets.fiverrcdn.com/assets/@fiverr-private/gig_upcrate_gallery/index.5c65f79d8a5a86c6c312.css' rel='stylesheet' type='text/css'>
+		<link rel="preload" href="fonts/proxima-nova-light.woff2" as="font" crossorigin>
+        <link rel="preload" href="fonts/proxima-nova-regular.woff2" as="font" crossorigin>
+        <link rel="preload" href="fonts/proxima-nova-semibold.woff2" as="font" crossorigin>
+        <link rel="preload" href="fonts/proxima-nova-bold.woff2" as="font" crossorigin>
+
+
+          
+           
 		<script type="text/javascript">
 			const basicDelivery = 5;
 			const extrafastDelivery = 2;
@@ -184,7 +176,8 @@
 		</script>
 		<style type="">
 			body {
-				font:400 14px proximanova,helvetica neue,Helvetica,Arial,sans-serif;
+				font: 400 16px/24px "ProximaNova","Helvetica Neue",Helvetica,Arial,sans-serif;
+				color:#62646a;
 				background: #F7F7F7;
 			}
 			.header {
@@ -196,28 +189,28 @@
 			}
 			.header div {
 				font-size: 36px;
-			//line-height: 35px;
-			font-weight: 400!important;
-			color: #555;
-			margin: 20px 0px;
+				//line-height: 35px;
+				font-weight: 400!important;
+				color: #555;
+				margin: 20px 0px;
 			}
 			h1 {
 				font-size: 28px;
-			line-height: 35px;
-			font-weight: 400!important;
-			text-transform: capitalize;
-			color: #555;
-			margin-bottom: 15px;
+				line-height: 35px;
+				font-weight: 400!important;
+				text-transform: capitalize;
+				color: #555;
+				margin-bottom: 15px;
 			}
 			h3 {
 				display: inline;
-			margin-right: 5px;
-			font-size: 16px;
-			line-height: 120%;
-			font-weight: 600;
-			text-transform: capitalize;
-			color: #555;
-			margin-bottom: 10px;
+				margin-right: 5px;
+				font-size: 16px;
+				line-height: 120%;
+				font-weight: 600;
+				text-transform: capitalize;
+				color: #555;
+				margin-bottom: 10px;
 			}
 			.all{
 				margin-left: 100px;
@@ -231,10 +224,12 @@
 				width: 225px;
 				background: #FFFFFF;
 				padding: 10px 15px;
-			height: 40px;
-			border: 1px solid #ddd;
-			font-weight: 400;
-			box-sizing: border-box;
+				height: 40px;
+				//border: 1px solid #ddd;
+				font-weight: 400;
+				box-sizing: border-box;
+				vertical-align: top;
+				line-height: 20px
 			}
 			.label-selector {
 			}
@@ -268,8 +263,8 @@
 				width: 200px!important;
 			}
 			.extra-table  td {
-				border: none!important;
-				width: 250px!important;
+				border: none;
+				width: 255px!important;
 				vertical-align: middle;
 			}
 			.extra-price {
