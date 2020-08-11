@@ -7,9 +7,7 @@
         <link rel="preload" href="fonts/proxima-nova-regular.woff2" as="font" crossorigin>
         <link rel="preload" href="fonts/proxima-nova-semibold.woff2" as="font" crossorigin>
         <link rel="preload" href="fonts/proxima-nova-bold.woff2" as="font" crossorigin>
-
-
-          
+          <link href="style.css" media="all" rel="stylesheet" />
            
 		<script type="text/javascript">
 			const basicDelivery = 5;
@@ -189,10 +187,14 @@
 			}
 			.header div {
 				font-size: 36px;
-				//line-height: 35px;
 				font-weight: 400!important;
 				color: #555;
 				margin: 20px 0px;
+			}
+			.pricing-header {
+				border: none;
+				margin:0 0 0 0;
+				padding: 0 0 0 0;
 			}
 			h1 {
 				font-size: 28px;
@@ -201,6 +203,9 @@
 				text-transform: capitalize;
 				color: #555;
 				margin-bottom: 15px;
+			}
+			.single-modea{
+				width: 1200px;
 			}
 			h3 {
 				display: inline;
@@ -225,11 +230,11 @@
 				background: #FFFFFF;
 				padding: 10px 15px;
 				height: 40px;
-				//border: 1px solid #ddd;
 				font-weight: 400;
 				box-sizing: border-box;
 				vertical-align: top;
-				line-height: 20px
+				line-height: 20px;
+				vertical-align: middle;
 			}
 			.label-selector {
 			}
@@ -304,11 +309,12 @@
 					<div class="edit-gig-form-wrap db-content-inner">
 						<section data-name="pricing" data-section-name="pricing" class="">
 							<div style="position: relative">
-								<header class="pricing-header">
-									<h1 class="alt">Scope &amp; Pricing</h1>
-								</header>
-								<section class="upcrate-box gig-and-packages js-gig-and-packages single-modea">
+
+								<section class="gig-and-packages js-gig-and-packages single-modea">
 									<div class="table-container first-table">
+										<header class="pricing-header">
+											<h1 class="alt">Scope &amp; Pricing</h1>
+										</header>
 										<table>
 											<tbody>
 												<tr class="input-packages">
@@ -446,7 +452,9 @@
 									</div>
 									
 									<div class="simulator">
-										<h1 class="alt">Simulator</h1>
+										<header class="pricing-header">
+											<h1 class="alt">Simulator</h1>
+											</header>
 										<table>
 											<tr>
 												<td>Small scope</td>
@@ -473,7 +481,7 @@
 									</div>
 								</section>
 								<br><br>
-								<section class="upcrate-box gig-and-packages single-mode">
+								<section class="gig-and-packages single-mode">
 									<header style="margin-bottom:15px;">
 										<h3>Add Extra Services</h3>
 									</header>
@@ -483,7 +491,7 @@
 												<td class="extraname">Extra fast delivery</td>
 												<td>
 													<label>I'll deliver in only</label>
-													<select class="dropdown extra-delivery" name="extrafast-time" id="extrafast-time">
+													<select class="dropdown extra-delivery" name="extrafast-time" style="margin-left:2px;" id="extrafast-time">
 														<option selecte value="2">2 Days</option>
 													</select>
 												</td>
